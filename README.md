@@ -17,10 +17,12 @@ Approach-1:- Utilise all available knowledge.
 It does not work because the data is heterogeneous, we have missing values and inconsistencies.
 
 Approach-2:- Select only 1 or 2 attributes.
-Datasets:- DBLP-ACM, DBLP-scholar, Abt-Buy
+Datasets:- DBLP-ACM, DBLP-scholar, Abt-Buy (available in the resource folder). These are benchmarked datasets. We compare the accuracy and valadity of our approach with state of the art results. 
+(https://dbs.uni-leipzig.de/research/projects/object_matching/benchmark_datasets_for_entity_resolution)
 
 Approach-3:- LSH subjects in the RDF data -> Compare the predicates of only matching entities by Jaccard similarity threshold for predicates and find the intersecting predicate -> Compare the objects of only intersecting entities in the entity matches found to retrieve the true matches.
 Datasets:- Dbpedia medium(Infobox 3.0rc and Infobox 3.4), Dbpedia large(Dbpedia 3.0rc and Infobox 3.4)
+(http://downloads.dbpedia.org/)
 
 The implementation is done on top of SANSA-Stack, using the spark and scala technologies.
 We use HDFS for large datasets storage.
