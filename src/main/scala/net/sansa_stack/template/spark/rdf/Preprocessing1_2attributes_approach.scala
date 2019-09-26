@@ -12,20 +12,13 @@ object Preprocessing1_2attributes_approach {
     
     val parsed_df1 = df1.distinct().rdd
     val parsed_df2 = df2.distinct().rdd
-   // clean_punctunations(parsed_df1)
-    //val vocab_size_entity1 = columns1.length + parsed_df1.distinct().count()
-    //val vocab_size_entity2 = columns2.length + parsed_df2.distinct().count()
-    val extractedEntity1 = extractedentity_AllPredicates(parsed_df1, columns1, no_of_attributes)//extractedentity_NoPredicates(parsed_df1, no_of_attributes)
-    val extractedEntity2 = extractedentity_AllPredicates(parsed_df2, columns2, no_of_attributes)//extractedentity_NoPredicates(parsed_df2, no_of_attributes)
+ 
+    //since we are working with only 1 or 2 attributes, we collect predicate for them
+    val extractedEntity1 = extractedentity_AllPredicates(parsed_df1, columns1, no_of_attributes)
+    val extractedEntity2 = extractedentity_AllPredicates(parsed_df2, columns2, no_of_attributes)
     LSHoperation.run(spark, extractedEntity1, extractedEntity2, teacher, threshold, factor, output_path)
   }
   
-  def clean_punctunations(df:RDD[Row])
-  {
-    df.map(f=> {
-     f.toString().replaceAllLiterally("/|(|)|.|:|-", "")
-    }).foreach(println)
-  }
   def extractedentity_NoPredicates(df:RDD[Row], no_of_attributes:Int) :RDD[(String,String)]= {
    return df.map(f=>{
      val key = f.get(0)+""
@@ -37,7 +30,6 @@ object Preprocessing1_2attributes_approach {
        i += 1
      }
      value = value.replace(",", " ").stripSuffix(" ")
-    // value = value.replaceAll(" - ", " ")//.replaceAll(" null", "").replaceAll("/", "").replace("...", " ").trim()
      (key,value.trim())
    })
   }
@@ -53,7 +45,6 @@ object Preprocessing1_2attributes_approach {
         i += 1
       }
       value = value.replace(",", " ").stripSuffix(" ")
-     // value = value.replaceAll(" null", "").replaceAll("/", "").replaceAll(" - ", " ").replace("...", " ").trim()
       (key,value.trim())
     })
   }
